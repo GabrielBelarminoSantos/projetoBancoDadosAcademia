@@ -1,0 +1,208 @@
+@startuml academia
+
+entity ALUNO{
+    *N° de matricula : INT <<PK>>
+    --
+    *CPF : CHAR(11)
+    oData nascimento : DATE
+    oNome : VARCHAR(50)
+    oEmail : VARCHAR(100)
+    oTelefone : CHAR(15) 
+}
+
+entity HISTORICO_ALUNO{
+    *ID_HISTORICO : INT <<PK>>
+    --
+    oPeso : NUMERIC(5,2)
+    oIdade : INT
+    oSexo : CHAR(1)
+    oHistorico Medico : VARCHAR(MAX)
+    oPorcentual de Gordura : NUMERIC(5,1)
+    oPorcentual Massa Magra : NUMERIC(5,1)
+}
+
+entity PROFESSOR{
+    *CREF : CHAR(11) <<PK>>
+    --
+    oNome : VARCHAR(50)
+    oValor Hora/Aula : NUMERIC(6,2)
+    oHorario de Entrada : DATETIME
+    oHorario de Saída : DATETIME
+    oEmail : VARCHAR(100)
+    oTelefone : CHAR(15)
+}
+
+entity FINANCEIRO{
+    *ID_HOLERITE : INT <<PK>>
+    --
+    oData Emissão : DATETIME
+    oData Referência : DATETIME
+    oSalario Bruto : NUMERIC(6,2)
+    oSalario Liquido : NUMERIC(6,2)
+    oDescontos : NUMERIC(6,2)
+}
+
+entity ESPECIALIDADE{
+    *ID_ESPECIALIDADE : INT <<PK>>
+    --
+    oNome : VARCHAR(50) 
+}
+
+entity TREINO{
+    *ID_TREINO : INT <<PK>>
+    --
+    oData Inicio : DATE
+    oData Fim : DATE
+    oN° Séries : INT
+    oN° Repetiçoes : INT
+}
+
+entity EXERCICIOS{
+    *ID_EXERCICIOS : INT <<PK>>
+    --
+    oNome : VARCHAR(50)
+    oGrupo Muscular: VARCHAR(50)
+}
+
+entity EQUIPAMENTOS{
+    *ID_EQUIPAMENTOS : INT <<PK>>
+    --
+    oNome : VARCHAR(50)   
+    oModelo : VARCHAR(50)
+    oMarca : VARCHAR (50)
+    oQuantidade : INT
+}
+
+entity EXEMPLAR_EQUIP{
+    *ID_EXEMPLAR : INT <<PK>>
+    --
+    oStatus : BIT   
+}
+
+entity PLANOS_DE_MENSALIDADE{
+    *NFE : CHAR(9) <<PK>>
+    --
+    oData inicio : DATE
+    oData fim : DATE
+    oValor : NUMERIC(8,2)
+    oTipo : VARCHAR(30)
+    oForma de Pagamento : VARCHAR(20)
+    oMulta de Cancelamento : NUMERIC(8,2)
+    oTrancamento : BIT
+}
+
+entity NUTRICIONISTA{
+    *CRN : CHAR(5) <<PK>>
+    --
+    oNome : VARCHAR(50)
+    oValor da Consulta : NUMERIC(5,2)
+    oHorario de Entrada : DATETIME
+    oHorario de Saída : DATETIME
+    oEmail : VARCHAR(30)
+    oTelefone : CHAR(15)
+}
+
+
+entity DIETA{
+    *ID_DIETA : INT <<PK>>
+    --
+    oLista de Alimentos : VARCHAR(MAX)
+    oHorario : DATETIME
+    oData inicio : DATE
+    oData fim : DATE
+}
+
+entity HORARIOS_AULAS{
+    *ID_AULA : INT <<PK>>
+    --
+    oNome : VARCHAR(50)
+    oHora Inicio : DATETIME
+    oHora Fim : DATETIME
+}
+
+entity alunoProfessor{
+    *N° da matricula : INT <<FK>>
+    *CREF : CHAR(11) <<FK>>
+    --
+    oModalidade : VARCHAR(50)
+}
+
+entity alunoNutri{
+    *N° da matricula : INT <<FK>>
+    *CRN : CHAR(5) <<FK>>
+    --
+    oData da consulta : DATETIME
+    oData de retorno : DATETIME
+    oEspecialidade : VARCHAR(50)    
+}
+
+entity alunoMensalidade{
+    *N° de matricula : INT  <<FK>>
+    *NFE : CHAR(9) <<FK>>
+    --
+    oDependentes do plano : VARCHAR(MAX)
+    oMensalidades abertas : DATE
+    oMensalidades fechadas : DATE
+    oModalidades do plano : VARCHAR(MAX)
+    oValor : NUMERIC(6,2)
+}
+
+entity relacaoFinancas{
+    *NFE : CHAR(9) <<FK>>
+    *CREF : CHAR(11) <<FK>>
+    *CRN : CHAR(5) <<FK>>
+    --
+    oDescontos : NUMERIC(6,2)
+    oJuros : NUMERIC(6,2)
+    oValores : NUMERIC(6,2)
+}
+
+entity aulasProfessor{
+    *CREF : CHAR(11) <<FK>>
+    *ID_AULA : INT <<FK>>
+    --
+    oAulas tematicas : VARCHAR(MAX)
+}
+
+entity treinoExerc{
+    *ID_TREINO : INT <<FK>>
+    *ID_EXERCICIOS : INT <<FK>>
+    --
+    oTempo de execução : TIME
+}
+
+entity exercEquip{
+    *ID_EXERCICIOS : INT <<FK>>
+    *ID_EQUIPAMENTOS : INT <<FK>>
+    --
+    oVariação de exercicio : VARCHAR(MAX)
+}
+
+ALUNO||--|{HISTORICO_ALUNO : "POSSUI"
+ALUNO}|-- alunoProfessor : "SOLICITA"
+alunoProfessor--|{PROFESSOR : "SOLICITA"
+ALUNO}|-- alunoNutri : "CONSULTA"
+alunoNutri--|{NUTRICIONISTA : "CONSULTA"
+ALUNO||--|{TREINO : "REALIZA"
+ALUNO||--|{DIETA : "POSSUI"
+ALUNO}o-- alunoMensalidade : "PAGA"
+alunoMensalidade--|{PLANOS_DE_MENSALIDADE : "POSSUI"
+PLANOS_DE_MENSALIDADE}|-- relacaoFinancas : "CONSULTA"
+relacaoFinancas--|{FINANCEIRO : "CONSULTA"
+PROFESSOR}|-- aulasProfessor : "MINISTRA"
+aulasProfessor--|{HORARIOS_AULAS : "POSSUI"
+PROFESSOR}|-- relacaoFinancas : "CONSULTA"
+relacaoFinancas--|{FINANCEIRO : "CONSULTA"
+PROFESSOR||--|{TREINO : "ELABORA"
+NUTRICIONISTA||--|{DIETA : "PLANEJA"
+NUTRICIONISTA}|-- relacaoFinancas : "CONSULTA"
+relacaoFinancas--|{FINANCEIRO : "CONSULTA"
+TREINO}o-- treinoExerc : "POSSUI"
+treinoExerc--|{EXERCICIOS : "POSSUI"
+EXERCICIOS}|-- exercEquip : "POSSUI"
+exercEquip--o{EQUIPAMENTOS : "POSSUI"
+EQUIPAMENTOS||--o{EXEMPLAR_EQUIP : "POSSUI"
+PROFESSOR}|--||ESPECIALIDADE : "TEM"
+NUTRICIONISTA}|--||ESPECIALIDADE : "TEM"
+
+@enduml

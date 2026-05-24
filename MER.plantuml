@@ -1,0 +1,153 @@
+@startuml academia
+
+entity ALUNO{
+    *N° de matricula
+    Data nascimento 
+    Nome
+    Email
+    Telefone
+    CPF    
+}
+
+entity HISTORICO_ALUNO{
+    *ID_HISTORICO
+    Peso
+    Idade
+    Sexo
+    Historico Medico 
+    Porcentual de Gordura
+    Porcentual Massa Magra
+}
+
+entity PROFESSOR{
+    *CREF
+    Nome
+    Valor Hora/Aula
+    Horario de Entrada
+    Horario de Saída
+    Email
+    Telefone
+}
+
+entity FINANCEIRO{
+    *ID_HOLERITE
+    Holerite
+    Data Emissão
+    Data Referencia
+    Salario Bruto
+    Salario Liquido
+    Descontos
+}
+
+entity ESPECIALIDADE{
+    *ID_ESPECIALIDADE
+    Nome 
+}
+
+entity TREINO{
+    *ID_TREINO
+    Data Inicio
+    Data Fim
+    N° Séries
+    N° Repetiçoes
+}
+
+entity EXERCICIOS{
+    *ID_EXERCICIOS
+    Nome
+    Grupo Muscular
+}
+
+entity EQUIPAMENTOS{
+    *ID_EQUIPAMENTOS
+    Nome    
+    Modelo
+    Marca
+    Quantidade
+}
+
+entity EXEMPLAR_EQUIP{
+    *ID_EXEMPLAR
+    Status
+}
+
+entity PLANOS_DE_MENSALIDADE{
+    *NFE
+    Data inicio
+    Data fim
+    Valor
+    Tipo
+    Forma de Pagamento
+    Multa de Cancelamento
+    Trancamento
+}
+
+entity NUTRICIONISTA{
+    *CRN
+    Nome
+    Valor da Consulta
+    Horario de Entrada
+    Horario de Saída
+    Email
+    Telefone
+}
+
+
+entity DIETA{
+    *ID_DIETA
+    Lista de Alimentos
+    Quantidade
+    Horario
+    Data inicio
+    Data fim
+}
+
+entity HORARIOS_AULAS{
+    *ID_AULA
+    Tipo
+    Hora Inicio
+    Hora Fim
+}
+
+entity alunoProfessor{}
+
+entity alunoNutri{}
+
+entity alunoMensalidade{}
+
+entity relacaoFinancas{}
+
+entity aulasProfessor{}
+
+entity treinoExerc{}
+
+entity exercEquip{}
+
+ALUNO||--|{HISTORICO_ALUNO
+ALUNO}|-- alunoProfessor
+alunoProfessor--|{PROFESSOR
+ALUNO}|-- alunoNutri
+alunoNutri--|{NUTRICIONISTA
+ALUNO||--|{TREINO
+ALUNO||--|{DIETA
+ALUNO}o-- alunoMensalidade
+alunoMensalidade--|{PLANOS_DE_MENSALIDADE
+ALUNO}|-- relacaoFinancas
+relacaoFinancas--|{FINANCEIRO
+PROFESSOR}|-- aulasProfessor
+aulasProfessor--|{HORARIOS_AULAS
+PROFESSOR}|-- relacaoFinancas
+relacaoFinancas--|{FINANCEIRO
+PROFESSOR||--|{TREINO
+NUTRICIONISTA||--|{DIETA
+NUTRICIONISTA}|-- relacaoFinancas
+relacaoFinancas--|{FINANCEIRO
+TREINO}o-- treinoExerc
+treinoExerc--|{EXERCICIOS
+EXERCICIOS}|-- exercEquip
+exercEquip--o{EQUIPAMENTOS
+EQUIPAMENTOS||--o{EXEMPLAR_EQUIP
+PROFESSOR}|--||ESPECIALIDADE
+NUTRICIONISTA}|--||ESPECIALIDADE
+
+@enduml
