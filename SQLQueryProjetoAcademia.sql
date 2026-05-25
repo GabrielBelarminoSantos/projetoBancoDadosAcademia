@@ -29,6 +29,7 @@ insert into ALUNO (CPF, Data_nascimento, Nome, Email, Telefone) values ('9998887
 create table HISTORICO_ALUNO
 (
 ID_HISTORICO int not null identity constraint pk_historico primary key,
+N_de_matricula int not null constraint fk_historico_aluno_aluno foreign key (N_de_matricula) references ALUNO(N_de_matricula),
 Peso numeric(5,2),
 Idade int,
 Sexo char(1),
@@ -38,11 +39,11 @@ Porcentual_Massa_Magra numeric(5,2)
 )
 
 --Inserindo dados na tabela--
-insert into HISTORICO_ALUNO (Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (80.5, 30, 'M', 'Sem histórico médico relevante', 20.5, 79.5);
-insert into HISTORICO_ALUNO (Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (65.2, 28, 'F', 'Alergia a amendoim', 25.3, 74.7);
-insert into HISTORICO_ALUNO (Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (90.8, 35, 'M', 'Hipertensão controlada', 18.7, 81.3);
-insert into HISTORICO_ALUNO (Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (55.0, 25, 'F', 'Sem histórico médico relevante', 22.1, 77.9);
-insert into HISTORICO_ALUNO (Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (70.3, 32, 'M', 'Diabetes tipo 2 controlada', 23.8, 76.2);
+insert into HISTORICO_ALUNO (N_de_matricula, Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (1, 80.00, 34, 'M', 'Sem histórico médico relevante', 20.00, 60.00);
+insert into HISTORICO_ALUNO (N_de_matricula, Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (2, 65.00, 39, 'F', 'Hipertensão controlada', 25.00, 45.00);
+insert into HISTORICO_ALUNO (N_de_matricula, Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (3, 90.00, 31, 'M', 'Diabetes tipo 2', 30.00, 50.00);
+insert into HISTORICO_ALUNO (N_de_matricula, Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (4, 55.00, 36, 'F', 'Asma controlada', 22.00, 40.00);
+insert into HISTORICO_ALUNO (N_de_matricula, Peso, Idade, Sexo, Historico_Medico, Porcentual_de_Gordura, Porcentual_Massa_Magra) values (5, 75.00, 29, 'M', 'Sem histórico médico relevante', 18.00, 55.00);
 
 
 --Criando tabela professor--
@@ -68,8 +69,8 @@ insert into PROFESSOR (CREF, Nome, Valor_Hora_Aula, Horario_de_Entrada, Horario_
 --Criando tabela relação aluno professor--
 create table ALUNO_PROFESSOR
 (
-N_de_matricula int not null constraint fk_matricula foreign key (N_de_matricula) references ALUNO(N_de_matricula), 
-CREF char(11) not null constraint fk_professor foreign key (CREF) references PROFESSOR(CREF),
+N_de_matricula int not null constraint fk_aluno_professor_aluno foreign key (N_de_matricula) references ALUNO(N_de_matricula), 
+CREF char(11) not null constraint fk_aluno_professor_professor foreign key (CREF) references PROFESSOR(CREF),
 Modalidade varchar(50)
 )
 
@@ -95,8 +96,8 @@ Trancamento bit
 )
 
 --Inserindo dados na tabela--
-insert into PLANOS_DE_MENSALIDADE (NFE, Data_inicio, Data_fim, Valor, Tipo, Forma_de_Pagamento, Multa_de_Cancelamento, Trancamento) values ('004565778', '2024-01-01', '2024-02-31', 150.00, 'Mensal', 'Cartão ou dinheiro', 50.00, 0);
-insert into PLANOS_DE_MENSALIDADE (NFE, Data_inicio, Data_fim, Valor, Tipo, Forma_de_Pagamento, Multa_de_Cancelamento, Trancamento) values ('004565789', '2024-01-01', '2024-04-31', 400.00, 'Trimestral', 'Cartão ou dinheiro', 100.00, 0);
+insert into PLANOS_DE_MENSALIDADE (NFE, Data_inicio, Data_fim, Valor, Tipo, Forma_de_Pagamento, Multa_de_Cancelamento, Trancamento) values ('004565778', '2024-01-01', '2024-02-28', 150.00, 'Mensal', 'Cartão ou dinheiro', 50.00, 0);
+insert into PLANOS_DE_MENSALIDADE (NFE, Data_inicio, Data_fim, Valor, Tipo, Forma_de_Pagamento, Multa_de_Cancelamento, Trancamento) values ('004565789', '2024-01-01', '2024-04-30', 400.00, 'Trimestral', 'Cartão ou dinheiro', 100.00, 0);
 insert into PLANOS_DE_MENSALIDADE (NFE, Data_inicio, Data_fim, Valor, Tipo, Forma_de_Pagamento, Multa_de_Cancelamento, Trancamento) values ('005865778', '2024-01-01', '2024-07-31', 800.00, 'Semestral', 'Cartão ou dinheiro', 150.00, 0);
 insert into PLANOS_DE_MENSALIDADE (NFE, Data_inicio, Data_fim, Valor, Tipo, Forma_de_Pagamento, Multa_de_Cancelamento, Trancamento) values ('104565778', '2024-01-01', '2025-01-31', 1200.00, 'Anual', 'Cartão ou dinheiro', 200.00, 0);
 insert into PLANOS_DE_MENSALIDADE (NFE, Data_inicio, Data_fim, Valor, Tipo, Forma_de_Pagamento, Multa_de_Cancelamento, Trancamento) values ('004444778', '2024-01-01', '2024-01-31', 99.00, 'Gym pass', 'Cartão ou dinheiro', 0, 0);
@@ -105,8 +106,8 @@ insert into PLANOS_DE_MENSALIDADE (NFE, Data_inicio, Data_fim, Valor, Tipo, Form
 --Criando tabela de relacionamento aluno mensalidade--
 create table ALUNO_MENSALIDADE
 (
-N_de_matricula int not null constraint fk_matricula foreign key (N_de_matricula) references ALUNO(N_de_matricula),
-NFE CHAR(9) not null constraint fk_NFE foreign key (NFE) references PLANOS_DE_MENSALIDADE(NFE),
+N_de_matricula int not null constraint fk_aluno_mensalidade_aluno foreign key (N_de_matricula) references ALUNO(N_de_matricula),
+NFE CHAR(9) not null constraint fk_aluno_mensalidade_planos_de_mensalidade foreign key (NFE) references PLANOS_DE_MENSALIDADE(NFE),
 Dependentes_do_plano varchar(MAX),
 Mensalidades_abertas date,
 Mensalidades_fechadas date,
@@ -116,7 +117,7 @@ Valor numeric(6,2)
 
 --Inserindo dados na tabela--
 insert into ALUNO_MENSALIDADE (N_de_matricula, NFE, Dependentes_do_plano, Mensalidades_abertas, Mensalidades_fechadas, Modalidades_do_plano, Valor) values (1, '004565778', 'Nenhum', '2024-01-01', '2024-01-31', 'Musculação', 150.00);
-insert into ALUNO_MENSALIDADE (N_de_matricula, NFE, Dependentes_do_plano, Mensalidades_abertas, Mensalidades_fechadas, Modalidades_do_plano, Valor) values (2, '004565789', 'Nenhum', '2024-01-01', '2024-04-31', 'Yoga', 400.00);
+insert into ALUNO_MENSALIDADE (N_de_matricula, NFE, Dependentes_do_plano, Mensalidades_abertas, Mensalidades_fechadas, Modalidades_do_plano, Valor) values (2, '004565789', 'Nenhum', '2024-01-01', '2024-04-30', 'Yoga', 400.00);
 insert into ALUNO_MENSALIDADE (N_de_matricula, NFE, Dependentes_do_plano, Mensalidades_abertas, Mensalidades_fechadas, Modalidades_do_plano, Valor) values (3, '005865778', 'Nenhum', '2024-01-01', '2024-07-31', 'Pilates', 700.00);
 insert into ALUNO_MENSALIDADE (N_de_matricula, NFE, Dependentes_do_plano, Mensalidades_abertas, Mensalidades_fechadas, Modalidades_do_plano, Valor) values (4, '104565778', 'Nenhum', '2024-01-01', '2025-01-31', 'Zumba', 1200.00);
 insert into ALUNO_MENSALIDADE (N_de_matricula, NFE, Dependentes_do_plano, Mensalidades_abertas, Mensalidades_fechadas, Modalidades_do_plano, Valor) values (5, '004444778', 'Nenhum', '2024-01-01', '2024-01-31', 'Crossfit', 150.00);
@@ -145,10 +146,10 @@ insert into NUTRICIONISTA (CRN, Nome, Valor_da_Consulta, Horario_de_Entrada, Hor
 --Criando tabela de relacionamento aluno nutricionista--
 create table ALUNO_NUTRI
 (
-N_de_matricula int not null constraint fk_aluno foreign key (N_de_matricula) references ALUNO(N_de_matricula),
-CRN char(6) not null constraint fk_nutricionista foreign key (CRN) references NUTRICIONISTA(CRN),
-Data_da_consulta datetime,
-Data_de_retorno datetime,
+N_de_matricula int not null constraint fk_aluno_nutri_aluno foreign key (N_de_matricula) references ALUNO(N_de_matricula),
+CRN char(6) not null constraint fk_aluno_nutri_nutri foreign key (CRN) references NUTRICIONISTA(CRN),
+Data_da_consulta date,
+Data_de_retorno date,
 Especialidade varchar(50) 
 )
 
@@ -156,7 +157,7 @@ Especialidade varchar(50)
 insert into ALUNO_NUTRI (N_de_matricula, CRN, Data_da_consulta, Data_de_retorno, Especialidade) values (1, '172345', '2026-01-15', '2026-02-15', 'Nutrição Esportiva');
 insert into ALUNO_NUTRI (N_de_matricula, CRN, Data_da_consulta, Data_de_retorno, Especialidade) values (2, '548321', '2026-01-20', '2026-02-20', 'Nutrição Clínica');
 insert into ALUNO_NUTRI (N_de_matricula, CRN, Data_da_consulta, Data_de_retorno, Especialidade) values (3, '679890', '2026-01-25', '2026-02-25', 'Nutrição para Emagrecimento');
-insert into ALUNO_NUTRI (N_de_matricula, CRN, Data_da_consulta, Data_de_retorno, Especialidade) values (4, '987465', '2026-01-30', '2026-02-29', 'Nutrição para Emagrecimento');
+insert into ALUNO_NUTRI (N_de_matricula, CRN, Data_da_consulta, Data_de_retorno, Especialidade) values (4, '987465', '2026-01-30', '2026-02-28', 'Nutrição para Emagrecimento');
 insert into ALUNO_NUTRI (N_de_matricula, CRN, Data_da_consulta, Data_de_retorno, Especialidade) values (5, '135729', '2026-02-05', '2026-03-05', 'Nutrição para Hipertrofia');
 
 
@@ -164,26 +165,28 @@ insert into ALUNO_NUTRI (N_de_matricula, CRN, Data_da_consulta, Data_de_retorno,
 create table DIETA
 (
 ID_DIETA int not null identity constraint pk_dieta primary key,
+N_de_matricula int not null constraint fk_dieta_aluno foreign key (N_de_matricula) references ALUNO(N_de_matricula),
+CRN char(6) not null constraint fk_dieta_nutri foreign key (CRN) references NUTRICIONISTA(CRN),
 Lista_de_Alimentos varchar(MAX),
-Horario datetime,
+Horario time,
 Data_inicio date,
 Data_fim date
 )
 
 --Inserindo dados na tabela--
-insert into DIETA (Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values ('Frango grelhado, Arroz integral, Brócolis', '12:00:00', '2026-01-01', '2026-01-31');
-insert into DIETA (Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values ('Peixe assado, Batata doce, Aspargos', '19:00:00', '2026-01-01', '2026-01-31');
-insert into DIETA (Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values ('Ovos mexidos, Aveia, Frutas', '08:00:00', '2026-01-01', '2026-01-31');
-insert into DIETA (Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values ('Salada de quinoa, Grão-de-bico, Legumes', '13:00:00', '2026-01-01', '2026-01-31');
-insert into DIETA (Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values ('Smoothie de proteínas, Frutas vermelhas, Sementes', '16:00:00', '2026-01-01', '2026-01-31');
+insert into DIETA (N_de_matricula, CRN, Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values (1, '172345', 'Frango grelhado, arroz integral, brócolis', '2026-01-15 12:00:00', '2026-01-15', '2026-02-15');
+insert into DIETA (N_de_matricula, CRN, Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values (2, '548321', 'Peixe assado, batata doce, salada verde', '2026-01-20 19:00:00', '2026-01-20', '2026-02-20');
+insert into DIETA (N_de_matricula, CRN, Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values (3, '679890', 'Omelete de claras, aveia, frutas', '2026-01-25 08:00:00', '2026-01-25', '2026-02-25');
+insert into DIETA (N_de_matricula, CRN, Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values (4, '987465', 'Salada de quinoa, legumes assados, frango desfiado', '2026-01-30 13:00:00', '2026-01-30', '2026-02-28');
+insert into DIETA (N_de_matricula, CRN, Lista_de_Alimentos, Horario, Data_inicio, Data_fim) values (5, '135729', 'Iogurte grego, granola, frutas vermelhas', '2026-02-05 10:00:00', '2026-02-05', '2026-03-05');
 
 
 --Criando tabela de relacionamento de finanças--
 create table RELACAO_FINANCAS
 (
-NFE char(9) not null constraint fk_NFE foreign key (NFE) references PLANOS_DE_MENSALIDADE(NFE),
-CREF char(11) not null constraint fk_professor foreign key (CREF) references PROFESSOR(CREF),
-CRN char(6) not null constraint fk_nutricionista foreign key (CRN) references NUTRICIONISTA(CRN),
+NFE char(9) not null constraint fk_relacao_financas_NFE foreign key (NFE) references PLANOS_DE_MENSALIDADE(NFE),
+CREF char(11) not null constraint fk_relacao_financas_professor foreign key (CREF) references PROFESSOR(CREF),
+CRN char(6) not null constraint fk_relacao_financas_nutricionista foreign key (CRN) references NUTRICIONISTA(CRN),
 Descontos numeric(6,2),
 Juros numeric(6,2),
 Valores numeric(6,2)
@@ -201,43 +204,46 @@ insert into RELACAO_FINANCAS (NFE, CREF, CRN, Descontos, Juros, Valores) values 
 create table FINANCEIRO
 (
 ID_HOLERITE int not null identity constraint pk_holerite primary key,
-Data_Emissão datetime,
-Data_Referência datetime,
+CREF char(11) not null constraint fk_financeiro_professor foreign key (CREF) references PROFESSOR(CREF),
+CRN char(6) not null constraint fk_financeiro_nutri foreign key (CRN) references NUTRICIONISTA(CRN),
+Data_Emissão date,
+Data_Referência date,
 Salario_Bruto numeric(6,2),
 Salario_Liquido numeric(6,2),
 Descontos numeric(6,2)
 )
 
 --Inserindo dados na tabela--
-insert into FINANCEIRO (Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('2026-01-31', '2026-01-01', 3000.00, 2700.00, 300.00);
-insert into FINANCEIRO (Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('2026-01-31', '2026-01-01', 3200.00, 2880.00, 320.00);
-insert into FINANCEIRO (Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('2026-01-31', '2026-01-01', 3500.00, 3150.00, 350.00);
-insert into FINANCEIRO (Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('2026-01-31', '2026-01-01', 2800.00, 2520.00, 280.00);
-insert into FINANCEIRO (Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('2026-01-31', '2026-01-01', 3100.00, 2790.00, 310.00);
+insert into FINANCEIRO (CREF, CRN, Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('324685-G/SP', '172345', '2026-01-31', '2026-01-01', 5000.00, 4500.00, 500.00);
+insert into FINANCEIRO (CREF, CRN, Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('744685-G/SP', '548321', '2026-01-31', '2026-01-01', 6000.00, 5400.00, 600.00);
+insert into FINANCEIRO (CREF, CRN, Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('325985-G/SP', '679890', '2026-01-31', '2026-01-01', 5500.00, 4950.00, 550.00);
+insert into FINANCEIRO (CREF, CRN, Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('324775-G/SP', '987465', '2026-01-31', '2026-01-01', 6500.00, 5850.00, 650.00);
+insert into FINANCEIRO (CREF, CRN, Data_Emissão, Data_Referência, Salario_Bruto, Salario_Liquido, Descontos) values ('124685-G/SP', '135729', '2026-01-31', '2026-01-01', 5200.00, 4680.00, 520.00);
 
 
 --Criando tabela especialidade--
 create table ESPECIALIDADE
 (
 ID_ESPECIALIDADE int not null identity constraint pk_especialidade primary key,
+CREF char(11)  constraint fk_especialidade_professor foreign key (CREF) references PROFESSOR(CREF),
+CRN char(6)  constraint fk_especialidade_nutri foreign key (CRN) references NUTRICIONISTA(CRN),
 NOME varchar(50)
 )
 
 --Inserindo dados na tabela--
-insert into ESPECIALIDADE (NOME) values ('Musculação');
-insert into ESPECIALIDADE (NOME) values ('Yoga');
-insert into ESPECIALIDADE (NOME) values ('Pilates');
-insert into ESPECIALIDADE (NOME) values ('Zumba');
-insert into ESPECIALIDADE (NOME) values ('Crossfit');
-
+insert into ESPECIALIDADE (CREF, NOME) values ('324685-G/SP', 'Treino de Força');
+insert into ESPECIALIDADE (CREF, NOME) values ('744685-G/SP', 'Yoga para Iniciantes');
+insert into ESPECIALIDADE (CRN, NOME) values ('679890', 'Nutrição para Emagrecimento');
+insert into ESPECIALIDADE (CRN, NOME) values ('987465', 'Nutrição para Emagrecimento');
+insert into ESPECIALIDADE (CREF, NOME) values ('124685-G/SP', 'Crossfit para Condicionamento Físico');
 
 --Criando tabela horario das aulas--
 create table HORARIOS_AULAS
 (	
 ID_AULA int not null identity constraint pk_horarioAulas primary key,
 Nome varchar(50),
-Hora_Inicio datetime,
-Hora_Fim datetime
+Hora_Inicio time,
+Hora_Fim time
 )
 
 --Inserindo dados na tabela--
@@ -251,8 +257,8 @@ insert into HORARIOS_AULAS (Nome, Hora_Inicio, Hora_Fim) values ('Crossfit', '12
 --Criando tabela de relacionamento aula professor--
 create table AULAS_PROFESSOR
 (	
-CREF char(11) not null constraint fk_professor foreign key (CREF) references PROFESSOR(CREF),
-ID_AULA int not null constraint fk_horarioAulas foreign key (ID_AULA) references HORARIOS_AULAS(ID_AULA),
+CREF char(11) not null constraint fk_aulas_professor_professor foreign key (CREF) references PROFESSOR(CREF),
+ID_AULA int not null constraint fk_aulas_professor_horarioAulas foreign key (ID_AULA) references HORARIOS_AULAS(ID_AULA),
 AULAS_TEMATICAS varchar(MAX)
 )
 
@@ -268,6 +274,7 @@ insert into AULAS_PROFESSOR (CREF, ID_AULA, AULAS_TEMATICAS) values ('124685-G/S
 create table TREINO
 (
 ID_TREINO int not null identity constraint pk_treino primary key,
+N_de_matricula int not null constraint fk_treino_aluno foreign key (N_de_matricula) references ALUNO(N_de_matricula),
 Data_Inicio date,
 Data_Fim date,
 N_Séries int,
@@ -275,12 +282,11 @@ N_Repetiçoes int
 )
 
 --Inserindo dados na tabela--
-insert into TREINO (Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values ('2026-01-01', '2026-01-31', 3, 12);
-insert into TREINO (Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values ('2026-02-01', '2026-02-28', 4, 10);
-insert into TREINO (Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values ('2026-03-01', '2026-03-31', 5, 8);
-insert into TREINO (Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values ('2026-04-01', '2026-04-30', 3, 15);
-insert into TREINO (Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values ('2026-05-01', '2026-05-31', 4, 12);
-
+insert into TREINO (N_de_matricula, Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values (1, '2026-01-01', '2026-01-31', 3, 12);
+insert into TREINO (N_de_matricula, Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values (2, '2026-01-01', '2026-02-28', 4, 10);
+insert into TREINO (N_de_matricula, Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values (3, '2026-01-01', '2026-03-31', 5, 8);
+insert into TREINO (N_de_matricula, Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values (4, '2026-01-01', '2026-04-30', 3, 15);
+insert into TREINO (N_de_matricula, Data_Inicio, Data_Fim, N_Séries, N_Repetiçoes) values (5, '2026-01-01', '2026-05-31', 4, 12);
 
 --Criando tabela exercicios--
 create table EXERCICIOS
@@ -301,8 +307,8 @@ insert into EXERCICIOS (NOME, GRUPO_MUSCULAR) values ('Rosca Direta', 'Bíceps')
 --Criando tabela de relacionamento treino exercicio--
 create table TREINO_EXERCICIOS
 (
-ID_TREINO int not null constraint fk_treino foreign key (ID_TREINO) references TREINO(ID_TREINO),
-ID_EXERCICIOS int not null constraint fk_exercicios foreign key (ID_EXERCICIOS) references EXERCICIOS(ID_EXERCICIOS),
+ID_TREINO int not null constraint fk_treino_exercicio_treino foreign key (ID_TREINO) references TREINO(ID_TREINO),
+ID_EXERCICIOS int not null constraint fk_treino_exercicios_exercicio foreign key (ID_EXERCICIOS) references EXERCICIOS(ID_EXERCICIOS),
 TEMPO_DE_EXECUÇÃO time
 )
 
@@ -335,8 +341,8 @@ insert into EQUIPAMENTOS (Nome, Modelo, Marca, Quantidade) values ('Puxador Cost
 --Criando tabela de relacionamento exercicio equipamento--
 create table EXERCICIOS_EQUIP
 (
-ID_EXERCICIOS int not null constraint fk_exercicios foreign key (ID_EXERCICIOS) references EXERCICIOS(ID_EXERCICIOS),
-ID_EQUIPAMENTOS int not null constraint fk_equipamentos foreign key (ID_EQUIPAMENTOS) references EQUIPAMENTOS(ID_EQUIPAMENTOS),
+ID_EXERCICIOS int not null constraint fk_exercicios_equipamento_exercicio foreign key (ID_EXERCICIOS) references EXERCICIOS(ID_EXERCICIOS),
+ID_EQUIPAMENTOS int not null constraint fk_exercicio_equipamentos_equipamentos foreign key (ID_EQUIPAMENTOS) references EQUIPAMENTOS(ID_EQUIPAMENTOS),
 VARIACAO_DE_EXERCICIOS varchar(MAX)
 )
 
@@ -352,15 +358,16 @@ insert into EXERCICIOS_EQUIP (ID_EXERCICIOS, ID_EQUIPAMENTOS, VARIACAO_DE_EXERCI
 create table EXEMPLAR_EQUIP
 (
 ID_EXEMPLAR int not null identity constraint pk_exemplar_equip primary key,
+ID_EQUIPAMENTOS int not null constraint fk_exemplar_equipamento_equipamentos foreign key (ID_EQUIPAMENTOS) references EQUIPAMENTOS(ID_EQUIPAMENTOS),
 STATUS_EQUIPAMENTO bit
 )
 
 --Inserindo dados na tabela--
-insert into EXEMPLAR_EQUIP (STATUS_EQUIPAMENTO) values (1);
-insert into EXEMPLAR_EQUIP (STATUS_EQUIPAMENTO) values (0);
-insert into EXEMPLAR_EQUIP (STATUS_EQUIPAMENTO) values (1);
-insert into EXEMPLAR_EQUIP (STATUS_EQUIPAMENTO) values (1);
-insert into EXEMPLAR_EQUIP (STATUS_EQUIPAMENTO) values (0);
+insert into EXEMPLAR_EQUIP (ID_EQUIPAMENTOS, STATUS_EQUIPAMENTO) values (1, 1);
+insert into EXEMPLAR_EQUIP (ID_EQUIPAMENTOS, STATUS_EQUIPAMENTO) values (1, 1);
+insert into EXEMPLAR_EQUIP (ID_EQUIPAMENTOS, STATUS_EQUIPAMENTO) values (1, 0);
+insert into EXEMPLAR_EQUIP (ID_EQUIPAMENTOS, STATUS_EQUIPAMENTO) values (1, 1);
+insert into EXEMPLAR_EQUIP (ID_EQUIPAMENTOS, STATUS_EQUIPAMENTO) values (1, 1);
 
 
 --Criando update unico--
